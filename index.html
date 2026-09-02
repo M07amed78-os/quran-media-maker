@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0d10">
+<title>Quran Media Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Lateef:wght@400;700&family=Reem+Kufi:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d10;--panel:#12161b;--panel2:#171c22;--border:#29313a;--text:#f2f0eb;--muted:#9da6af;--accent:#d4af37;--ivory:#fff8e7;--danger:#e07070;--ok:#7fcf9e}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+button,input,select{font:inherit} button{cursor:pointer}
+body{overflow-x:hidden}.topbar{height:68px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(11,13,16,.96);position:sticky;top:0;z-index:5}
+.brand{display:flex;gap:12px;align-items:center}.brand-mark{font-family:"Noto Naskh Arabic",serif;color:var(--accent);font-size:30px}.brand strong{display:block;font-size:16px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.badge{font-size:11px;color:#c7ced5;border:1px solid var(--border);padding:7px 10px;border-radius:999px}
+.app{display:grid;grid-template-columns:370px minmax(0,1fr);min-height:calc(100vh - 68px)}
+.controls{border-right:1px solid var(--border);padding:18px 16px 30px;overflow:auto;max-height:calc(100vh - 68px)}
+.preview-area{min-width:0;padding:18px 24px 26px;display:flex;flex-direction:column;align-items:center}.panel{background:linear-gradient(180deg,var(--panel),#101419);border:1px solid var(--border);border-radius:13px;padding:15px;margin-bottom:13px;box-shadow:0 8px 26px rgba(0,0,0,.18)}
+.panel h2{font-size:12px;letter-spacing:.02em;margin:0 0 12px;color:#f5f2ec;display:flex;gap:8px;align-items:center}.panel h2 span{display:inline-flex;width:22px;height:22px;border-radius:7px;align-items:center;justify-content:center;background:#222932;color:var(--accent);font-size:11px}
+label{display:block;color:#aeb7c0;font-size:11px;margin-bottom:9px}label>select,label>input[type="range"]{display:block;width:100%;margin-top:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.select-wrap{position:relative}.select-wrap:after{content:"⌄";position:absolute;right:10px;bottom:8px;pointer-events:none;color:#87919a}.select-wrap select{appearance:none}
+select,input[type="number"]{background:#0d1115;color:#ece9e3;border:1px solid #303944;border-radius:8px;padding:9px 10px;outline:none}select:focus,input:focus{border-color:#56616d}.upload{border:1px dashed #47525d;background:#0e1216;border-radius:10px;padding:13px;display:flex;align-items:center;gap:10px;cursor:pointer}.upload:hover{border-color:#697680;background:#11161b}.upload-icon{width:34px;height:34px;border-radius:8px;background:#1e252c;display:grid;place-items:center;color:var(--accent);font-size:20px}.upload strong{font-size:12px;display:block}.upload small{color:var(--muted);display:block;font-size:10px;margin-top:3px}.row{display:flex;align-items:center;gap:9px}.grow{flex:1}.range-row{display:grid;grid-template-columns:1fr 58px;align-items:center;gap:8px}.range-row output{background:#0c1014;border:1px solid #29313a;padding:7px 6px;border-radius:7px;text-align:center;color:#ded9cf;font-size:11px}
+input[type="range"]{accent-color:#d4af37}.color-row{display:grid;grid-template-columns:1fr 40px 40px;gap:8px;align-items:end}.color-picker{height:38px;padding:3px;background:#0d1115;border:1px solid #303944;border-radius:8px;width:100%}.swatch{height:38px;border-radius:8px;border:1px solid #3a424b;position:relative}.swatch.active{outline:2px solid var(--accent);outline-offset:1px}.gold{background:#d4af37}.ivory{background:#fff8e7}.hint{font-size:10px;line-height:1.5;color:#838d96;margin:8px 0 10px}.segmented{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.segmented button,.secondary,.icon-btn,.play-btn,.download{border:1px solid #303944;background:#10151a;color:#dce1e5;border-radius:8px;padding:8px 9px;font-size:11px}.segmented button.active{border-color:#b5942c;background:#2b2410;color:#f5e7b0}.check{display:flex;align-items:center;gap:8px;margin:0 0 10px}.check input{accent-color:#d4af37}.secondary{width:100%;margin-top:9px}.download{width:100%;margin-top:9px;background:#d4af37;border-color:#d4af37;color:#17130a;font-weight:700}.download:disabled,.play-btn:disabled{opacity:.45;cursor:not-allowed}.status{margin-top:11px;font-size:10px;line-height:1.4;color:#8e98a2;padding:8px 9px;border:1px solid #29313a;border-radius:8px;background:#0d1115}.status.ok{border-color:#274d37;color:#9ddbb2}.status.error{border-color:#573033;color:#e6a2a2}.note{display:block;color:#727c86;margin-top:7px;font-size:9px;line-height:1.4}.progress{height:5px;background:#20262c;border-radius:999px;overflow:hidden;margin-top:10px}.progress>div{height:100%;width:0;background:#d4af37}.hidden{display:none}
+.preview-head{width:min(920px,100%);display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.preview-head strong{font-size:13px}.preview-head span{font-size:10px;color:var(--muted)}.stage{position:relative;background:#090b0e;border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:0 20px 60px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;min-height:420px;width:min(920px,100%)}
+.canvas-wrap{position:relative;display:inline-block;max-height:72vh;max-width:100%;line-height:0;touch-action:none}.canvas-wrap canvas{display:block;max-height:72vh;max-width:100%;width:auto;height:auto;background:#050607;border-radius:9px}.drag-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11px;color:#c7ccd1;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);padding:8px 10px;border-radius:999px;pointer-events:none;transition:opacity .2s}.drag-cursor{cursor:grab}.drag-cursor:active{cursor:grabbing}
+.preview-actions{width:min(920px,100%);display:flex;align-items:center;justify-content:center;gap:9px;margin-top:12px;flex-wrap:wrap}.icon-btn{width:34px;height:34px;padding:0;font-size:18px}.play-btn{min-width:138px}.preview-footer{width:min(920px,100%);display:flex;justify-content:space-between;gap:10px;color:#6e7881;font-size:9px;margin-top:10px}.preview-footer span:last-child{text-align:right}
+.tip{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:9px;color:#a1a9b0;background:rgba(9,11,14,.72);border:1px solid rgba(255,255,255,.08);padding:5px 8px;border-radius:6px;pointer-events:none;opacity:.9}
+@media(max-width:900px){.app{grid-template-columns:1fr}.controls{border-right:0;border-bottom:1px solid var(--border);max-height:none}.preview-area{padding:14px}.canvas-wrap canvas{max-height:60vh}.topbar{padding:0 14px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><div class="brand-mark">۞</div><div><strong>Quran Media Maker</strong><small>Simple Quran verse video creator</small></div></div><div class="badge">Free • GitHub Pages</div></header>
+<div class="app">
+<aside class="controls">
+<section class="panel"><h2><span>1</span>Background image</h2><label class="upload" for="bgInput"><div class="upload-icon">＋</div><div><strong id="bgName">Choose an image</strong><small>JPG, PNG, WebP or AVIF • people are allowed</small></div></label><input id="bgInput" type="file" accept="image/jpeg,image/png,image/webp,image/avif" hidden><div class="two" style="margin-top:10px"><label>Image fit<div class="select-wrap"><select id="fit"><option value="cover">Cover</option><option value="contain">Contain</option></select></div></label><label>Dark overlay<div class="range-row"><input id="overlay" type="range" min="0" max="0.75" step="0.01" value="0.20"><output id="overlayOut">20%</output></div></label></div></section>
+<section class="panel"><h2><span>2</span>Video format</h2><div id="formats" class="segmented"><button data-format="vertical" class="active">9:16</button><button data-format="square">1:1</button><button data-format="landscape">16:9</button></div></section>
+<section class="panel"><h2><span>3</span>Surah & verses</h2><label>Surah<div class="select-wrap"><select id="surah"></select></div></label><div class="two"><label>From<div class="select-wrap"><select id="from"></select></div></label><label>To<div class="select-wrap"><select id="to"></select></div></label></div></section>
+<section class="panel"><h2><span>4</span>Text style</h2><label>Arabic font<div class="select-wrap"><select id="font"><option>Amiri</option><option>Noto Naskh Arabic</option><option>Scheherazade New</option><option>Aref Ruqaa</option><option>Lateef</option><option>Reem Kufi</option></select></div></label><label><div class="range-row"><span>Arabic font size</span><output id="fontOut">58px</output></div><input id="fontSize" type="range" min="28" max="110" value="58"></label><label>Arabic text color<input id="color" class="color-picker" type="color" value="#FFF8E7"></label><div class="color-row"><button class="swatch gold" title="Gold" data-color="#D4AF37"></button><button class="swatch ivory active" title="Warm ivory" data-color="#FFF8E7"></button><button id="reset" class="secondary" style="margin:0;grid-column:3;width:auto">Reset</button></div><div class="hint">Drag the Quran text directly on the preview. Translation can also be dragged separately.</div></section>
+<section class="panel"><h2><span>5</span>Translation</h2><label class="check"><input id="translationOn" type="checkbox"><span>Show translation</span></label><label>Translation<div class="select-wrap"><select id="translation"></select></div></label><label><div class="range-row"><span>Translation size</span><output id="translationOut">26px</output></div><input id="translationSize" type="range" min="14" max="52" value="26"></label></section>
+<section class="panel"><h2><span>6</span>Reciter & export</h2><label>Reciter<div class="select-wrap"><select id="reciter"></select></div></label><div class="row"><button id="download" class="download" disabled>Download video</button></div><div id="progress" class="progress hidden"><div id="bar"></div></div><div id="status" class="status">Choose a background image and Quran verses to begin.</div><small class="note">Video export uses your browser's MediaRecorder and downloads as WebM.</small></section>
+</aside>
+<main class="preview-area">
+<div class="preview-head"><strong>Preview</strong><span id="meta">9:16 • 1080×1920</span></div>
+<div class="stage"><div id="wrap" class="canvas-wrap"><canvas id="canvas" width="1080" height="1920"></canvas><div id="empty" class="drag-label">Upload an image to start</div><div class="tip">Drag the Quran text or translation</div></div></div>
+<div class="preview-actions"><button id="prev" class="icon-btn">‹</button><span id="indicator" style="font-size:10px;color:#98a1a9;min-width:72px;text-align:center">—</span><button id="next" class="icon-btn">›</button><button id="play" class="play-btn" disabled>▶ Play recitation</button><button id="stop" class="secondary" style="width:auto;margin:0">Stop</button></div>
+<div class="preview-footer"><span>Quran text, translations and audio: Al Quran Cloud</span><span id="readyHint">Select verses to enable playback and download.</span></div>
+</main>
+</div>
+<script>
+const API='https://api.alquran.cloud/v1';
+const AUDIO_BASE='https://the-quran-project.github.io/Quran-Audio/Data';
+const RECITERS=[
+  {id:'1', name:'Mishary Rashid Al Afasy'},
+  {id:'2', name:'Abu Bakr Al Shatri'},
+  {id:'3', name:'Nasser Al Qatami'},
+  {id:'4', name:'Yasser Al Dosari'},
+  {id:'5', name:'Hani Ar Rifai'}
+];
+const FORMATS={vertical:{w:1080,h:1920,label:'9:16'},square:{w:1080,h:1080,label:'1:1'},landscape:{w:1920,h:1080,label:'16:9'}};
+const SURAH_COUNTS=[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+const SURAHS=[['Al-Fatiha','الفاتحة'],['Al-Baqarah','البقرة'],['Aal-E-Imran','آل عمران'],['An-Nisa','النساء'],['Al-Ma’idah','المائدة'],['Al-An’am','الأنعام'],['Al-A’raf','الأعراف'],['Al-Anfal','الأنفال'],['At-Tawbah','التوبة'],['Yunus','يونس'],['Hud','هود'],['Yusuf','يوسف'],['Ar-Ra’d','الرعد'],['Ibrahim','إبراهيم'],['Al-Hijr','الحجر'],['An-Nahl','النحل'],['Al-Isra','الإسراء'],['Al-Kahf','الكهف'],['Maryam','مريم'],['Ta-Ha','طه'],['Al-Anbiya','الأنبياء'],['Al-Hajj','الحج'],['Al-Mu’minun','المؤمنون'],['An-Nur','النور'],['Al-Furqan','الفرقان'],['Ash-Shu’ara','الشعراء'],['An-Naml','النمل'],['Al-Qasas','القصص'],['Al-Ankabut','العنكبوت'],['Ar-Rum','الروم'],['Luqman','لقمان'],['As-Sajdah','السجدة'],['Al-Ahzab','الأحزاب'],['Saba','سبأ'],['Fatir','فاطر'],['Ya-Sin','يس'],['As-Saffat','الصافات'],['Sad','ص'],['Az-Zumar','الزمر'],['Ghafir','غافر'],['Fussilat','فصلت'],['Ash-Shura','الشورى'],['Az-Zukhruf','الزخرف'],['Ad-Dukhan','الدخان'],['Al-Jathiyah','الجاثية'],['Al-Ahqaf','الأحقاف'],['Muhammad','محمد'],['Al-Fath','الفتح'],['Al-Hujurat','الحجرات'],['Qaf','ق'],['Adh-Dhariyat','الذاريات'],['At-Tur','الطور'],['An-Najm','النجم'],['Al-Qamar','القمر'],['Ar-Rahman','الرحمن'],['Al-Waqi’ah','الواقعة'],['Al-Hadid','الحديد'],['Al-Mujadila','المجادلة'],['Al-Hashr','الحشر'],['Al-Mumtahanah','الممتحنة'],['As-Saff','الصف'],['Al-Jumu’ah','الجمعة'],['Al-Munafiqun','المنافقون'],['At-Taghabun','التغابن'],['At-Talaq','الطلاق'],['At-Tahrim','التحريم'],['Al-Mulk','الملك'],['Al-Qalam','القلم'],['Al-Haqqah','الحاقة'],['Al-Ma’arij','المعارج'],['Nuh','نوح'],['Al-Jinn','الجن'],['Al-Muzzammil','المزمل'],['Al-Muddaththir','المدثر'],['Al-Qiyamah','القيامة'],['Al-Insan','الإنسان'],['Al-Mursalat','المرسلات'],['An-Naba','النبأ'],['An-Nazi’at','النازعات'],['Abasa','عبس'],['At-Takwir','التكوير'],['Al-Infitar','الانفطار'],['Al-Mutaffifin','المطففين'],['Al-Inshiqaq','الانشقاق'],['Al-Buruj','البروج'],['At-Tariq','الطارق'],['Al-A’la','الأعلى'],['Al-Ghashiyah','الغاشية'],['Al-Fajr','الفجر'],['Al-Balad','البلد'],['Ash-Shams','الشمس'],['Al-Layl','الليل'],['Ad-Duha','الضحى'],['Ash-Sharh','الشرح'],['At-Tin','التين'],['Al-Alaq','العلق'],['Al-Qadr','القدر'],['Al-Bayyinah','البينة'],['Az-Zalzalah','الزلزلة'],['Al-Adiyat','العاديات'],['Al-Qari’ah','القارعة'],['At-Takathur','التكاثر'],['Al-Asr','العصر'],['Al-Humazah','الهمزة'],['Al-Fil','الفيل'],['Quraysh','قريش'],['Al-Ma’un','الماعون'],['Al-Kawthar','الكوثر'],['Al-Kafirun','الكافرون'],['An-Nasr','النصر'],['Al-Masad','المسد'],['Al-Ikhlas','الإخلاص'],['Al-Falaq','الفلق'],['An-Nas','الناس']];
+const $=id=>document.getElementById(id);
+const els={bg:$('bgInput'),bgName:$('bgName'),fit:$('fit'),overlay:$('overlay'),overlayOut:$('overlayOut'),surah:$('surah'),from:$('from'),to:$('to'),font:$('font'),fontSize:$('fontSize'),fontOut:$('fontOut'),color:$('color'),translationOn:$('translationOn'),translation:$('translation'),translationSize:$('translationSize'),translationOut:$('translationOut'),reciter:$('reciter'),download:$('download'),progress:$('progress'),bar:$('bar'),status:$('status'),canvas:$('canvas'),wrap:$('wrap'),empty:$('empty'),meta:$('meta'),indicator:$('indicator'),play:$('play'),stop:$('stop'),readyHint:$('readyHint')};
+const state={format:'vertical',fit:'cover',overlay:.2,font:'Amiri',arabicSize:58,color:'#FFF8E7',translationOn:false,translationSize:26,translationEdition:'en.sahih',reciter:'1',image:null,surah:36,from:1,to:SURAH_COUNTS[35],verses:[],translations:[],current:0,audioBuffers:null,positions:{arabic:{x:.5,y:.58},translation:{x:.5,y:.77}}};
+let drag=null,previewAudio=[],previewPlaying=false;
+function status(msg,kind=''){els.status.textContent=msg;els.status.className='status '+kind}
+function setCanvasSize(){const f=FORMATS[state.format];els.canvas.width=f.w;els.canvas.height=f.h;els.meta.textContent=`${f.label} • ${f.w}×${f.h}`;draw()}
+function buildSurahs(){els.surah.innerHTML=SURAHS.map((s,i)=>`<option value="${i+1}">${i+1}. ${s[0]} — ${s[1]}</option>`).join('');els.surah.value=String(state.surah);buildVerseSelects()}
+function buildVerseSelects(){const n=SURAH_COUNTS[state.surah-1];els.from.innerHTML='';els.to.innerHTML='';for(let i=1;i<=n;i++){els.from.add(new Option(String(i),i));els.to.add(new Option(String(i),i))}state.from=Math.min(state.from,n);state.to=Math.min(Math.max(state.to,state.from),n);els.from.value=String(state.from);els.to.value=String(state.to)}
+async function getJSON(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`Request failed (${r.status})`);return r.json()}
+async function loadTranslations(){try{const d=await getJSON(API+'/edition/type/translation?format=text');const list=(d.data||[]).filter(x=>x.type==='translation'&&x.format==='text');const preferred=['en.sahih','en.clearquran','en.yusufali','ur.jalandhry','fr.hamidullah'];const ordered=[...preferred.map(id=>list.find(x=>x.identifier===id)).filter(Boolean),...list.filter(x=>!preferred.includes(x.identifier))];els.translation.innerHTML=ordered.map(x=>`<option value="${x.identifier}">${x.language||''} — ${x.englishName||x.name||x.identifier}</option>`).join('');els.translation.value=state.translationEdition}catch(e){els.translation.innerHTML='<option value="en.sahih">English — Saheeh International</option>';state.translationEdition='en.sahih'}}
+async function loadReciters(){
+  els.reciter.innerHTML=RECITERS.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
+  els.reciter.value=state.reciter;
+}
+
+async function loadVerses(){state.surah=Number(els.surah.value);state.from=Number(els.from.value);state.to=Number(els.to.value);if(state.to<state.from){state.to=state.from;els.to.value=String(state.to)}state.verses=[];state.translations=[];state.current=0;els.download.disabled=true;els.play.disabled=true;status('Loading Quran text…');draw();try{const [ar,tr]=await Promise.all([getJSON(`${API}/surah/${state.surah}/quran-uthmani`),getJSON(`${API}/surah/${state.surah}/${encodeURIComponent(state.translationEdition)}`)]);state.verses=(ar.data?.ayahs||[]).filter(a=>a.numberInSurah>=state.from&&a.numberInSurah<=state.to).map(a=>({...a,globalNumber:a.number}));state.translations=(tr.data?.ayahs||[]).filter(a=>a.numberInSurah>=state.from&&a.numberInSurah<=state.to);if(!state.verses.length)throw new Error('No verses returned.');els.download.disabled=!state.image;els.play.disabled=false;status(state.image?'Ready — drag the Quran text on the preview.':'Quran loaded — now choose a background image.','ok');els.readyHint.textContent=state.image?'Ready to preview or download.':'Choose a background image.';draw()}catch(e){console.error(e);status('Could not load Quran data. Check your internet connection.','error')}}
+function fitImage(ctx,img,w,h){const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height;const scale=state.fit==='contain'?Math.min(w/iw,h/ih):Math.max(w/iw,h/ih);const dw=iw*scale,dh=ih*scale;ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);ctx.drawImage(img,(w-dw)/2,(h-dh)/2,dw,dh)}
+function wrapText(ctx,text,maxWidth){const words=text.trim().split(/\s+/);const lines=[];let line='';for(const word of words){const cand=line?`${line} ${word}`:word;if(ctx.measureText(cand).width<=maxWidth||!line){line=cand}else{lines.push(line);line=word}}if(line)lines.push(line);return lines}
+function metrics(type,text){const c=els.canvas,ctx=c.getContext('2d'),scale=Math.min(c.width/1080,c.height/1920);if(type==='arabic')ctx.font=`700 ${state.arabicSize*scale}px "${state.font}",serif`;else ctx.font=`500 ${state.translationSize*scale}px Inter,sans-serif`;const max=c.width*(type==='arabic'?.86:.78);const lines=wrapText(ctx,text||'',max);const size=(type==='arabic'?state.arabicSize:state.translationSize)*scale;const lh=size*1.38;const widths=lines.map(x=>ctx.measureText(x).width);return {w:Math.min(max,Math.max(40,...widths)+30),h:Math.max(lh,lines.length*lh),lh,lines,scale}}
+function draw(){const c=els.canvas,ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(state.image)fitImage(ctx,state.image,c.width,c.height);else{const g=ctx.createLinearGradient(0,0,c.width,c.height);g.addColorStop(0,'#171b20');g.addColorStop(1,'#080a0d');ctx.fillStyle=g;ctx.fillRect(0,0,c.width,c.height)}if(state.overlay){ctx.fillStyle=`rgba(0,0,0,${state.overlay})`;ctx.fillRect(0,0,c.width,c.height)}const v=state.verses[state.current];if(v){const a=metrics('arabic',v.text);ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='rtl';ctx.font=`700 ${state.arabicSize*a.scale}px "${state.font}",serif`;ctx.fillStyle=state.color;ctx.shadowColor='rgba(0,0,0,.75)';ctx.shadowBlur=10*a.scale;ctx.shadowOffsetY=3*a.scale;const ax=state.positions.arabic.x*c.width,ay=state.positions.arabic.y*c.height;a.lines.forEach((line,i)=>ctx.fillText(line,ax,ay+(i-(a.lines.length-1)/2)*a.lh));ctx.restore();if(state.translationOn){const txt=state.translations[state.current]?.text||'';const t=metrics('translation',txt);ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='ltr';ctx.font=`500 ${state.translationSize*t.scale}px Inter,sans-serif`;ctx.fillStyle='#f0ece4';ctx.shadowColor='rgba(0,0,0,.55)';ctx.shadowBlur=7*t.scale;const tx=state.positions.translation.x*c.width,ty=state.positions.translation.y*c.height;t.lines.forEach((line,i)=>ctx.fillText(line,tx,ty+(i-(t.lines.length-1)/2)*t.lh));ctx.restore()}ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='ltr';ctx.font=`500 ${Math.max(20,22*Math.min(c.width/1080,c.height/1920))}px Inter,sans-serif`;ctx.fillStyle='rgba(255,248,231,.9)';ctx.fillText(`${state.surah}:${v.numberInSurah}`,c.width/2,c.height*.93);ctx.restore()}els.indicator.textContent=v?`${v.numberInSurah} / ${state.verses.length}`:'—';els.empty.style.opacity=state.image?.0:state.verses.length?.0:0.9;els.wrap.classList.toggle('drag-cursor',!!v)}
+function pointerPoint(e){const r=els.canvas.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*els.canvas.width,y:(e.clientY-r.top)/r.height*els.canvas.height}}
+function hitBox(type,text,p){const m=metrics(type,text);const pos=state.positions[type];return p.x>=pos.x*els.canvas.width-m.w/2&&p.x<=pos.x*els.canvas.width+m.w/2&&p.y>=pos.y*els.canvas.height-m.h/2&&p.y<=pos.y*els.canvas.height+m.h/2}
+els.canvas.addEventListener('pointerdown',e=>{if(!state.verses.length)return;const v=state.verses[state.current],p=pointerPoint(e);const ar=hitBox('arabic',v.text,p);const tr=state.translationOn&&hitBox('translation',state.translations[state.current]?.text||'',p);const type=ar?'arabic':tr?'translation':null;if(!type)return;drag={type,dx:p.x-state.positions[type].x*els.canvas.width,dy:p.y-state.positions[type].y*els.canvas.height};els.canvas.setPointerCapture(e.pointerId)});
+els.canvas.addEventListener('pointermove',e=>{if(!drag)return;const p=pointerPoint(e);state.positions[drag.type].x=Math.max(.08,Math.min(.92,(p.x-drag.dx)/els.canvas.width));state.positions[drag.type].y=Math.max(.08,Math.min(.9,(p.y-drag.dy)/els.canvas.height));draw()});['pointerup','pointercancel'].forEach(ev=>els.canvas.addEventListener(ev,()=>drag=null));
+let previewContext=null,previewDestination=null,previewSources=[];
+function stopAudio(){
+  previewPlaying=false;
+  previewSources.forEach(src=>{try{src.stop()}catch{}});
+  previewSources=[];
+  if(previewContext){try{previewContext.close()}catch{}}
+  previewContext=null;
+  previewDestination=null;
+  els.play.textContent='▶ Play recitation';
+}
+async function playRecitation(){
+  if(!state.verses.length)return;
+  stopAudio();
+  previewPlaying=true;
+  els.play.textContent='■ Loading…';
+  try{
+    const ac=new (window.AudioContext||window.webkitAudioContext)();
+    previewContext=ac;
+    const buffers=await Promise.all(state.verses.map(v=>fetchAudioBuffer(ac,v.number,v.numberInSurah,state.reciter)));
+    if(!previewPlaying){await ac.close();return;}
+    await ac.resume();
+    const starts=[];
+    let when=ac.currentTime+0.05;
+    for(const b of buffers){starts.push(when);when+=b.duration;}
+    const total=when-(ac.currentTime+0.05);
+    els.play.textContent='■ Playing…';
+    buffers.forEach((b,i)=>{
+      const src=ac.createBufferSource();
+      src.buffer=b;
+      src.connect(ac.destination);
+      src.start(starts[i]);
+      previewSources.push(src);
+    });
+    const tick=()=>{
+      if(!previewPlaying)return;
+      const t=ac.currentTime;
+      let idx=0;
+      while(idx<starts.length-1&&t>=starts[idx+1])idx++;
+      state.current=idx;draw();
+      if(t<starts[0]+total+0.02) requestAnimationFrame(tick); else stopAudio();
+    };
+    tick();
+  }catch(e){
+    console.error(e);
+    stopAudio();
+    status(e.message||'Preview audio could not be loaded. Try another reciter.','error');
+  }
+}
+
+function audioUrlFor(globalAyah,surah,ayahInSurah,edition){
+  return `${AUDIO_BASE}/${edition}/${surah}_${ayahInSurah}.mp3`;
+}
+async function fetchAudioBuffer(ac, globalAyah, ayahInSurah, edition){
+  const url=audioUrlFor(globalAyah,state.surah,ayahInSurah,edition);
+  let response;
+  try{
+    response=await fetch(url,{mode:'cors',cache:'force-cache'});
+  }catch(err){
+    throw new Error(`Could not fetch recitation audio for ayah ${ayahInSurah}. The audio server may be unavailable. Try another reciter.`);
+  }
+  if(!response.ok) throw new Error(`Recitation audio is unavailable for ayah ${ayahInSurah} (${response.status}). Try another reciter.`);
+  const arrayBuffer=await response.arrayBuffer();
+  try{return await ac.decodeAudioData(arrayBuffer)}
+  catch(err){throw new Error(`The recitation audio for ayah ${ayahInSurah} could not be decoded by your browser.`)}
+}
+
+async function exportVideo(){
+  if(!state.image||!state.verses.length)return;
+  els.download.disabled=true;els.progress.classList.remove('hidden');els.bar.style.width='0%';stopAudio();
+  try{
+    if(!window.MediaRecorder)throw new Error('Your browser does not support video recording. Use current Chrome or Edge.');
+    const ac=new (window.AudioContext||window.webkitAudioContext)();
+    const dest=ac.createMediaStreamDestination();
+    setProgress(2,'Preparing audio…');
+    const buffers=new Array(state.verses.length);
+    let done=0;
+    await Promise.all(state.verses.map(async(ay,i)=>{
+      buffers[i]=await fetchAudioBuffer(ac,ay.number,ay.numberInSurah,state.reciter);
+      done++;
+      setProgress(2+(done/state.verses.length)*28,`Downloading recitation ${done}/${state.verses.length}…`);
+    }));
+    await ac.resume();
+    const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));
+    if(!mime)throw new Error('No supported WebM recorder found in this browser. Use current Chrome or Edge.');
+    const stream=els.canvas.captureStream(30);
+    const audioTrack=dest.stream.getAudioTracks()[0];
+    if(!audioTrack)throw new Error('The browser could not create an audio recording track.');
+    stream.addTrack(audioTrack);
+    const chunks=[];
+    const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:8000000,audioBitsPerSecond:192000});
+    rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+    const starts=[];let when=ac.currentTime+0.10;
+    for(const b of buffers){starts.push(when);when+=b.duration;}
+    const total=Math.max(.1,when-(ac.currentTime+0.10));
+    const stopped=new Promise((resolve,reject)=>{rec.onstop=resolve;rec.onerror=e=>reject(e.error||new Error('Video recording failed.'))});
+    rec.start(250);
+    buffers.forEach((b,i)=>{const src=ac.createBufferSource();src.buffer=b;src.connect(dest);src.start(starts[i]);});
+    const wall=performance.now();
+    let raf;
+    const tick=()=>{
+      const elapsed=(performance.now()-wall)/1000;
+      let idx=0;while(idx<starts.length-1&&ac.currentTime>=starts[idx+1])idx++;
+      state.current=idx;draw();
+      setProgress(30+Math.min(68,elapsed/total*68),'Rendering video…');
+      if(elapsed<total)raf=requestAnimationFrame(tick);
+      else{cancelAnimationFrame(raf);setTimeout(()=>rec.stop(),120);}
+    };
+    tick();
+    await stopped;
+    stream.getTracks().forEach(t=>t.stop());dest.stream.getTracks().forEach(t=>t.stop());await ac.close();
+    const blob=new Blob(chunks,{type:mime});
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
+    a.href=url;a.download=`quran-${state.surah}-${state.from}-${state.to}-${FORMATS[state.format].label.replace(':','x')}.webm`;
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    setProgress(100,'Done');status('Video downloaded successfully.','ok');
+  }catch(e){console.error(e);status(e.message||'Export failed.','error')}
+  finally{els.download.disabled=!state.image||!state.verses.length;setTimeout(()=>els.progress.classList.add('hidden'),1000)}
+}
+
+function setProgress(p,msg){els.bar.style.width=Math.round(p)+'%';status(`${msg} ${Math.round(p)}%`)}
+async function init(){buildSurahs();state.surah=36;state.from=1;state.to=SURAH_COUNTS[35];els.surah.value='36';buildVerseSelects();els.from.value='1';els.to.value=String(state.to);setCanvasSize();els.translation.disabled=true;status('Loading available translations and reciters…');await Promise.all([loadTranslations(),loadReciters()]);await loadVerses()}
+els.bg.addEventListener('change',e=>{const file=e.target.files?.[0];if(!file)return;const img=new Image();img.onload=()=>{state.image=img;els.bgName.textContent=file.name;els.download.disabled=!state.verses.length;els.readyHint.textContent=state.verses.length?'Ready to preview or download.':'Choose verses.';status('Background loaded. Drag the Quran text on the preview.','ok');draw();URL.revokeObjectURL(img.src)};img.onerror=()=>status('That image could not be loaded.','error');img.src=URL.createObjectURL(file)});
+els.fit.addEventListener('change',e=>{state.fit=e.target.value;draw()});els.overlay.addEventListener('input',e=>{state.overlay=Number(e.target.value);els.overlayOut.textContent=Math.round(state.overlay*100)+'%';draw()});document.querySelectorAll('#formats button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#formats button').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.format=b.dataset.format;setCanvasSize()}));
+els.surah.addEventListener('change',()=>{state.surah=Number(els.surah.value);state.from=1;state.to=SURAH_COUNTS[state.surah-1];buildVerseSelects();loadVerses()});[els.from,els.to].forEach(x=>x.addEventListener('change',loadVerses));
+els.font.addEventListener('change',e=>{state.font=e.target.value;draw()});els.fontSize.addEventListener('input',e=>{state.arabicSize=Number(e.target.value);els.fontOut.textContent=state.arabicSize+'px';draw()});els.translationSize.addEventListener('input',e=>{state.translationSize=Number(e.target.value);els.translationOut.textContent=state.translationSize+'px';draw()});els.color.addEventListener('input',e=>{state.color=e.target.value;document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));draw()});document.querySelectorAll('.swatch[data-color]').forEach(b=>b.addEventListener('click',()=>{state.color=b.dataset.color;els.color.value=b.dataset.color;document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));b.classList.add('active');draw()}));
+els.translationOn.addEventListener('change',()=>{state.translationOn=els.translationOn.checked;els.translation.disabled=!state.translationOn;draw()});els.translation.addEventListener('change',()=>{state.translationEdition=els.translation.value;loadVerses()});els.reciter.addEventListener('change',()=>{state.reciter=els.reciter.value});
+$('reset').addEventListener('click',()=>{state.positions={arabic:{x:.5,y:.58},translation:{x:.5,y:.77}};draw()});$('prev').addEventListener('click',()=>{if(!state.verses.length)return;state.current=Math.max(0,state.current-1);draw()});$('next').addEventListener('click',()=>{if(!state.verses.length)return;state.current=Math.min(state.verses.length-1,state.current+1);draw()});els.play.addEventListener('click',playRecitation);els.stop.addEventListener('click',stopAudio);els.download.addEventListener('click',exportVideo);
+init();
+</script>
+</body>
+</html>
